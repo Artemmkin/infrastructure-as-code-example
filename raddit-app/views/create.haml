@@ -1,0 +1,10 @@
+%h2 Add a new post
+%form{ action: '/new', method: 'post', role: 'form'}
+  .form-group
+    %label{for: 'title'} Title:
+    %input{name:'title', placeholder: 'cool title', class: 'form-control', id: 'title'}
+  .form-group
+    %label{for: 'link'} Link:
+    %input{name:'link', placeholder: 'awesome link', class: 'form-control', id: 'link'}
+  .form-group
+    %input{class: 'btn btn-primary', type: 'submit', value:'Post it!'}
