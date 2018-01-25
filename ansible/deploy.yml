@@ -1,0 +1,21 @@
+---
+- name: Deploy Raddit App
+  hosts: raddit-app
+  tasks:
+    - name: Fetch the latest version of application code
+      git:
+        repo: 'https://github.com/Artemmkin/raddit.git'
+        dest: /home/raddit-user/raddit
+      register: clone
+
+    - name: Install application dependencies
+      bundler:
+        state: present
+        chdir: /home/raddit-user/raddit
+      when: clone.changed
+      notify: restart raddit
+
+  handlers:
+  - name: restart raddit
+    become: true
+    systemd: name=raddit state=restarted
