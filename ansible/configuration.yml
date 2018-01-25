@@ -1,0 +1,50 @@
+---
+- name: Configure Raddit App Instance
+  hosts: all
+  gather_facts: false
+  become: true
+
+  pre_tasks:
+    - name: Install python for Ansible to work
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: false
+
+  tasks:
+    - name: Install Ruby
+      apt: "name={{ item }} state=present"
+      with_items:
+        - ruby-full
+        - build-essential
+
+    - name: Install Bundler
+      gem:
+        name: bundler
+        state: present
+        user_install: no
+
+    - name: Add APT key
+      apt_key:
+        id: EA312927
+        keyserver: keyserver.ubuntu.com
+
+    - name: Add MongoDB repo
+      apt_repository:
+        repo: deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse
+        state: present
+
+    - name: Install MongoDB package
+      apt:
+        name: mongodb-org
+        state: present
+        update_cache: yes
+
+    - name: Start MongoDB
+      systemd:
+        name: mongod
+        state: started
+        enabled: yes
+
+    - name: Download Unit File for Raddit
+      get_url:
+        url: https://gist.githubusercontent.com/Artemmkin/ce82397cfc69d912df9cd648a8d69bec/raw/7193a36c9661c6b90e7e482d256865f085a853f2/raddit.service
+        dest: /etc/systemd/system/raddit.service

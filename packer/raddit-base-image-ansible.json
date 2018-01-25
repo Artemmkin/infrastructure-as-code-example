@@ -1,0 +1,21 @@
+{
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "infrastructure-as-code",
+      "zone": "europe-west1-b",
+      "machine_type": "g1-small",
+      "source_image_family": "ubuntu-1604-lts",
+      "image_name": "raddit-base-{{isotime `20060102-150405`}}",
+      "image_family": "raddit-base",
+      "image_description": "Ubuntu 16.04 with Ruby, Bundler and MongoDB preinstalled",
+      "ssh_username": "raddit-user"
+    }
+  ],
+  "provisioners": [
+      {
+          "type": "ansible",
+          "playbook_file": "{{template_dir}}/../ansible/configuration.yml"
+      }
+  ]
+}
