@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -e
 
 echo "  ----- install ruby and bundler -----  "
 apt-get update

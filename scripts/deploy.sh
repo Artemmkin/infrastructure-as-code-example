@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -e
 
 echo "  ----- clone application repository -----  "
 git clone https://github.com/Artemmkin/raddit.git
