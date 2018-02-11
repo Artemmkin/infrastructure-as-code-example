@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1 # implies the use of kubernetes 1.7
+                         # use apps/v1beta2 for kubernetes 1.8
+kind: Deployment
+metadata:
+  name: raddit-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: raddit
+  template:
+    metadata:
+      labels:
+        app: raddit
+    spec:
+      containers:
+      - name: raddit
+        image: artemkin/raddit
+        env:
+        - name: DATABASE_HOST
+          value: mongo-service
+---
+apiVersion: apps/v1beta1 # implies the use of kubernetes 1.7
+                         # use apps/v1beta2 for kubernetes 1.8
+kind: Deployment
+metadata:
+  name: mongo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:3.2
