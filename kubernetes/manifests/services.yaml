@@ -10,6 +10,7 @@ spec:
   - protocol: TCP
     port: 9292
     targetPort: 9292
+    nodePort: 30100
 ---
 apiVersion: v1
 kind: Service
