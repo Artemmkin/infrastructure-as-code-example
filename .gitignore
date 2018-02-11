@@ -1,7 +1,6 @@
 # Terraform
 .terraform/
 *.tfstate*
-*.tfvars
 
 # Ansible
 *.retry
