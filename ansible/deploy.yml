@@ -9,6 +9,7 @@
       register: clone
 
     - name: Install application dependencies
+      become: true
       bundler:
         state: present
         chdir: /home/raddit-user/raddit
